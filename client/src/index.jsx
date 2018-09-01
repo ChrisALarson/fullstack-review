@@ -18,20 +18,32 @@ class App extends React.Component {
       url: '/repos'
     });
 
-    console.log('request is..', request);
-
     request.done((data) => {
-      console.log(data);
       this.setState( {
         repos: data
       });
     });
-
   }
 
   search (term) {
-    console.log(`${term} was searched`);
-    // TODO
+    console.log(`${term} was searched --`);
+    let self = this;
+    let request = $.ajax({
+      url: `/repos/${term}`,
+      method: 'POST'
+    });
+    request.done((data) => {
+      console.log(`${data.reposSubmitted} repos from ${term} submitted to DB --`);
+      let getRepos = $.ajax({
+        url: '/repos',
+        method: 'GET'
+      });
+      getRepos.done((repos) => {
+        self.setState({
+          repos: repos
+        });
+      });
+    });
   }
 
   render () {

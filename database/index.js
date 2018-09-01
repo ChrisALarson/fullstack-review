@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/fetcher');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/fetcher');
 
 let repoSchema = mongoose.Schema({
   id: {
@@ -26,8 +25,8 @@ repoSchema.index({ stars: -1 , forks: -1 });
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repos) => {
-  // let reposSaved = 0;
   let formattedRepos = [];
+
   repos.forEach(repo => {
     let formattedRepo = {
       id: repo.id,
@@ -46,16 +45,17 @@ let save = (repos) => {
     };
     formattedRepos.push(formattedRepo);
   });
+
   Repo.insertMany(formattedRepos, { ordered: false }, (error, docs) => {
     if (error) return console.log(error);
   });
-}
+};
 
 let retrieve = (callback) => {
   Repo.find()
     .limit(25)
     .sort({ stars: -1, forks: -1 })
     .exec(callback);
-}
+};
 
 module.exports = { save, retrieve };
