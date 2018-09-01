@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+mongoose.connect('mongodb://localhost/test');
 
 let repoSchema = mongoose.Schema({
   id: {
@@ -20,7 +20,7 @@ let repoSchema = mongoose.Schema({
   forks: Number
 });
 
-repoSchema.index({ stars: -1 , forks: -1 });
+repoSchema.index({ stars: -1 , forks: -1 }, { background: false });
 
 let Repo = mongoose.model('Repo', repoSchema);
 
