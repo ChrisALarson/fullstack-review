@@ -21,6 +21,8 @@ let repoSchema = mongoose.Schema({
   forks: Number
 });
 
+repoSchema.index({ stars: -1 , forks: -1 });
+
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repos) => {
@@ -46,15 +48,14 @@ let save = (repos) => {
   });
   Repo.insertMany(formattedRepos, { ordered: false }, (error, docs) => {
     if (error) return console.log(error);
-    console.log(docs);
-    console.log('------------------');
   });
-  // document.save((error, product) => {
-  //   if (error) return console.log(error);
-  //   reposSaved++;
-  //   console.log('product: ', product);
-  //   console.log('reposSaved: ', reposSaved);
-  // });
 }
 
-module.exports.save = save;
+let retrieve = (callback) => {
+  Repo.find()
+    .limit(25)
+    .sort({ stars: -1, forks: -1 })
+    .exec(callback);
+}
+
+module.exports = { save, retrieve };
