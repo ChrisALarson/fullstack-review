@@ -34,6 +34,7 @@ app.post('/repos/:username', function (req, res) {
 
 
 app.get('/repos', function (req, res) {
+  console.log('Serving GET /repos');
   db.retrieve((error, repos) => {
     console.log(repos);
     res.status(200).json(repos);

@@ -26,7 +26,7 @@ repoSchema.index({ stars: -1 , forks: -1 });
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repos) => {
-  let reposSaved = 0;
+  // let reposSaved = 0;
   let formattedRepos = [];
   repos.forEach(repo => {
     let formattedRepo = {

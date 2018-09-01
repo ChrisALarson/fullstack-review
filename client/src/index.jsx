@@ -10,6 +10,22 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
+  }
+
+  componentDidMount() {
+    let request = $.ajax({
+      method: 'GET',
+      url: '/repos'
+    });
+
+    console.log('request is..', request);
+
+    request.done((data) => {
+      console.log(data);
+      this.setState( {
+        repos: data
+      });
+    });
 
   }
 
